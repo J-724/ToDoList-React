@@ -1,5 +1,5 @@
 {
-  "name": "cv-project",
+  "name": "ToDoList-React",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,15 +11,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/J-724/CV-Project.git"
+    "url": "git+https://github.com/J-724/ToDoList-React.git"
   },
   "keywords": [],
   "author": "Javier Pernia jjpernian@gmail.com",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/J-724/CV-Project/issues"
+    "url": "https://github.com/J-724/ToDoList-React/issues"
   },
-  "homepage": "https://github.com/J-724/CV-Project#readme",
+  "homepage": "https://github.com/J-724/ToDoList-React#readme",
   "devDependencies": {
     "@babel/core": "^7.18.9",
     "@babel/preset-env": "^7.18.9",
@@ -29,6 +29,7 @@
     "css-loader": "^6.7.1",
     "eslint": "^8.22.0",
     "eslint-plugin-react": "^7.30.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.6.1",
