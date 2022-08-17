@@ -1,11 +1,11 @@
 import React, { useState, useEffect} from "react";
-import DisplayProjects from "../Sidebar/DisplayProjects";
+import DisplayProjectsInfo from "./DisplayProjectsInfo";
 
 const Main = () => {
 
   return (
     <div className="main">
-      <DisplayProjects />
+      <DisplayProjectsInfo />
     </div>
   );
 }
