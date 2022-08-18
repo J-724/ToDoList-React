@@ -4,23 +4,26 @@ import Main from "./components/Main/Main";
 import Sidebar from "./components/Sidebar/Sidebar";
 import { Project, Task } from "./components/#Misc/ObjTemplate";
 
-// change displayed project from click event that returns the name of the selected project on the sidebar
+import StorageTest from "./StorageTest";
 
-function initStorage(object) {
-    if (localStorage.getItem(object) === null) {
-      return 'Storage empty';
-    } else {
-      return JSON.parse(localStorage[object].name);
-    }
+// change displayed project from click event that returns the name of the selected project on the sidebar
+function editStorageTask(newName) {
+  const task = JSON.parse(localStorage.getItem('tasks'));
+  task.name = newName;
+  localStorage.setItem('tasks', JSON.stringify(task));
 }
 
+StorageTest();
 
-const proj = {...Project}
-console.log(proj);
-localStorage.setItem('projects', [JSON.stringify(Project)]);
+editStorageTask('Mi perro Ryuk');
 
-const StorageObj = JSON.parse(localStorage.getItem('projects'));
-console.log(StorageObj);
+function initStorage(item) {
+  if (localStorage.getItem(item) === null) {
+    return 'Storage empty';
+  } else {
+    return localStorage.getItem(item); ;
+  }
+}
 
 
 const App = () => {
@@ -42,7 +45,7 @@ const App = () => {
 
   const [test, setTest] = useState('Test message');
 
-  const [storageTest, setStorageTest] = useState(initStorage('projects'));
+  const [storageTest, setStorageTest] = useState('');
 
   return (
     <div className="app">
@@ -55,4 +58,4 @@ const App = () => {
   );
 }
 
-export default App;
+export default App; 
