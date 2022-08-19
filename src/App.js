@@ -5,7 +5,7 @@ import Sidebar from "./components/Sidebar/Sidebar";
 import NewProjectUI from "./components/NewProjectUI";
 import NewTaskUI from "./components/NewTaskUI";
 import { Project, Task } from "./components/#Misc/ObjTemplate";
-import { getStorageObj, saveToStorage, initStorage  } from "./StorageTest";
+import { getStorageObj, saveObjToStorage, initStorage  } from "./StorageTest";
 
 // change displayed project from click event that returns the name of the selected project on the sidebar
 
@@ -14,7 +14,7 @@ function newtaskObj () {
     ...Task,
     id: uniqid(),
   }
-  return JSON.stringify(task);
+  return task;
 }
 
 function newProjectObj () {
@@ -22,7 +22,7 @@ function newProjectObj () {
     ...Project,
     id: uniqid(),
   }
-  return JSON.stringify(project);
+  return project;
 }
 
 
@@ -31,32 +31,36 @@ const App = () => {
   const [selectedProject, setSelectedProject] = useState('today');
 
   const [projects, setProjects] = useState([
-    initStorage('projects', newProjectObj)
+    initStorage('projects')
   ]);
   
   const [tasks, setTasks] = useState([
-    initStorage('tasks', newtaskObj)
+    initStorage('tasks')
   ]);
+
+
 
 
   const AddProject = () => {
     console.log('add project');
-    const newProject = [{
-      ...Project,
-      id: uniqid(),
-    }];
 
-    const storedProjects = [getStorageObj('projects')].concat(newProject);
+    const storedProjects = getStorageObj('projects');
 
+    const concatProjects = storedProjects.concat(newProjectObj());
 
 
     console.log('Inside addProject   storedProjects:');
     console.log(storedProjects);
+    console.log('newProject:');
+    console.log(newProjectObj());
+    console.log('concatProjects:');
+    console.log(concatProjects);
+
     // console.log('Inside addProject  concat storedProjects:');
     // console.log(storedProjects.concat(newProject));
 
 
-    saveToStorage('projects', storedProjects);
+    saveObjToStorage('projects', storedProjects.concat(newProjectObj()));
   };
 
   const ChangeProject = (id, event) => {
@@ -90,8 +94,9 @@ console.log('Mi perrito Ryuk')
 console.log(localStorage)
 console.log('Stored projects: ')
 console.log(getStorageObj('projects'))
+console.log(localStorage.getItem('projects'))
 console.log('Stored tasks: ')
 console.log(getStorageObj('tasks'))
-localStorage.clear();
+// localStorage.clear();
 
 export default App; 

@@ -8,15 +8,16 @@ function getStorageObj(item) {
   return storageObj;
 }
 
-function saveToStorage(item, data) {
+function saveObjToStorage(item, data) {
   const stringifyData = JSON.stringify(data);
   localStorage.setItem(item, stringifyData);
 }
 
 //Will brake is a funciton is not passed in
-function initStorage(item, data) {
+function initStorage(item) {
   if (localStorage.getItem(item) === null) {
-    localStorage.setItem(item, [data()])
+    localStorage.setItem(item, '[]')
+    return localStorage.getItem(item);
   }
 
   const object = JSON.parse(localStorage.getItem(item));
@@ -24,7 +25,7 @@ function initStorage(item, data) {
   return object;
 }
 
-export {getStorageObj, saveToStorage, initStorage};
+export {getStorageObj, saveObjToStorage, initStorage};
 
 
 
@@ -37,26 +38,6 @@ export {getStorageObj, saveToStorage, initStorage};
 
 
 //Clear in future, not used code
-function StorageTest() {
-  localStorage.setItem('projects', [
-    JSON.stringify({
-      ...Project, 
-      id: uniqid()
-  })]);
-  
-  localStorage.setItem('tasks', [newtask()]);
-  
-  const getTsk = localStorage.getItem('tasks');
-  const parseTsk = JSON.parse(getTsk);
-  
-  console.log("Direct storage call: " + getTsk);
-  console.log(`Parse tasks`);
-  console.log(parseTsk);
-  
-  console.log(localStorage)
-  // localStorage.clear()
-}
-
 function editStorageTask(newName) {
   const task = JSON.parse(localStorage.getItem('tasks'));
   task.name = newName;
