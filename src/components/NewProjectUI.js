@@ -1,10 +1,17 @@
 import React, { useState, useEffect} from "react";
 
-const NewProjectUI = () => {
+const NewProjectUI = (props) => {
   return (
-    <div>
+    <div className="newProjectUI">
       <label htmlFor="NewProjectInput">New Project</label>
       <input type="text" id="NewProjectInput"/>
+
+      <button type="button" 
+        className="addBtn"
+        onClick={props.AddProject}
+      >
+        Add
+      </button>
     </div>
   )
 }

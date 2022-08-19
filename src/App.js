@@ -2,60 +2,96 @@ import React, {useState, useEffect} from "react";
 import uniqid from "uniqid";
 import Main from "./components/Main/Main";
 import Sidebar from "./components/Sidebar/Sidebar";
+import NewProjectUI from "./components/NewProjectUI";
+import NewTaskUI from "./components/NewTaskUI";
 import { Project, Task } from "./components/#Misc/ObjTemplate";
-
-import StorageTest from "./StorageTest";
+import { getStorageObj, saveToStorage, initStorage  } from "./StorageTest";
 
 // change displayed project from click event that returns the name of the selected project on the sidebar
-function editStorageTask(newName) {
-  const task = JSON.parse(localStorage.getItem('tasks'));
-  task.name = newName;
-  localStorage.setItem('tasks', JSON.stringify(task));
-}
 
-StorageTest();
-
-editStorageTask('Mi perro Ryuk');
-
-function initStorage(item) {
-  if (localStorage.getItem(item) === null) {
-    return 'Storage empty';
-  } else {
-    return localStorage.getItem(item); ;
+function newtaskObj () {
+  const task = {
+    ...Task,
+    id: uniqid(),
   }
+  return JSON.stringify(task);
 }
+
+function newProjectObj () {
+  const project = {
+    ...Project,
+    id: uniqid(),
+  }
+  return JSON.stringify(project);
+}
+
 
 
 const App = () => {
-  const [selectedProject, setSelectedProject] = useState('');
+  const [selectedProject, setSelectedProject] = useState('today');
 
   const [projects, setProjects] = useState([
-    {
-      ...Project,
-      id: uniqid(),
-    },
+    initStorage('projects', newProjectObj)
   ]);
   
   const [tasks, setTasks] = useState([
-    {
-      ...Task,
-      id: uniqid(),
-    },
+    initStorage('tasks', newtaskObj)
   ]);
 
-  const [test, setTest] = useState('Test message');
 
-  const [storageTest, setStorageTest] = useState('');
+  const AddProject = () => {
+    console.log('add project');
+    const newProject = [{
+      ...Project,
+      id: uniqid(),
+    }];
+
+    const storedProjects = [getStorageObj('projects')].concat(newProject);
+
+
+
+    console.log('Inside addProject   storedProjects:');
+    console.log(storedProjects);
+    // console.log('Inside addProject  concat storedProjects:');
+    // console.log(storedProjects.concat(newProject));
+
+
+    saveToStorage('projects', storedProjects);
+  };
+
+  const ChangeProject = (id, event) => {
+  
+  };
+
+
+
+
 
   return (
     <div className="app">
       <Sidebar />
+      <br />
+      <NewProjectUI 
+        AddProject={AddProject}  
+      />
+      <NewTaskUI />
+      <br />
       <Main 
-        test={test}
-        // storageTest={storageTest}
       />
     </div>
   );
 }
+
+
+
+
+
+console.log('Mi perrito Ryuk')
+console.log(localStorage)
+console.log('Stored projects: ')
+console.log(getStorageObj('projects'))
+console.log('Stored tasks: ')
+console.log(getStorageObj('tasks'))
+localStorage.clear();
 
 export default App; 

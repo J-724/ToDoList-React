@@ -5,8 +5,6 @@ const Main = (props) => {
 
   return (
     <div className="main">
-      {props.test}
-      <br/>
       <DisplayProjectsInfo />
     </div>
   );
