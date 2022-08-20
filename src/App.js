@@ -29,39 +29,36 @@ function newProjectObj () {
 
 const App = () => {
   const [selectedProject, setSelectedProject] = useState('today');
-
   const [projects, setProjects] = useState([
     initStorage('projects')
   ]);
-  
   const [tasks, setTasks] = useState([
     initStorage('tasks')
   ]);
 
 
-
-
   const AddProject = () => {
     console.log('add project');
-
-    const storedProjects = getStorageObj('projects');
-
-    const concatProjects = storedProjects.concat(newProjectObj());
-
-
-    console.log('Inside addProject   storedProjects:');
-    console.log(storedProjects);
-    console.log('newProject:');
-    console.log(newProjectObj());
-    console.log('concatProjects:');
     console.log(concatProjects);
 
-    // console.log('Inside addProject  concat storedProjects:');
-    // console.log(storedProjects.concat(newProject));
-
+    const storedProjects = getStorageObj('projects');
+    const concatProjects = storedProjects.concat(newProjectObj());
 
     saveObjToStorage('projects', storedProjects.concat(newProjectObj()));
   };
+
+  const AddTask = () => {
+    console.log('add task');
+    console.log(concatTasks);
+
+    const storedTasks = getStorageObj('tasks');
+    const concatTasks = storedTasks.concat(newtaskObj());
+
+    saveObjToStorage('tasks', storedTasks.concat(newtaskObj()));
+  }
+
+
+
 
   const ChangeProject = (id, event) => {
   
@@ -69,17 +66,21 @@ const App = () => {
 
 
 
-
-
   return (
     <div className="app">
       <Sidebar />
       <br />
+
       <NewProjectUI 
         AddProject={AddProject}  
       />
-      <NewTaskUI />
+
+      <NewTaskUI 
+        AddTask={AddTask}
+      />
+
       <br />
+
       <Main 
       />
     </div>
