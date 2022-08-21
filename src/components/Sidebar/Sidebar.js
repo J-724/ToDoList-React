@@ -5,7 +5,7 @@ import Shortcuts from "./Shortcuts";
 import DisplayProjects from "./DisplayProjects";
 import NewProject from "./NewProject";
 
-const Sidebar = () => {
+const Sidebar = (props) => {
 
   return (
     <div className="sidebar">
@@ -13,7 +13,9 @@ const Sidebar = () => {
       <SearchBar />
       <Shortcuts />
       <DisplayProjects />
-      <NewProject />
+      <NewProject 
+        changeVisibility={props.changeVisibility}
+      />
     </div>
   );
 }

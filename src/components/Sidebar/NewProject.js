@@ -3,12 +3,13 @@ import AddIcon from "../../assets/add.png";
 
 const AddIconCredits = "https://www.flaticon.com/free-icons/plus";
 
-const NewProject = () => {
+const NewProject = (props) => {
 
   return (
-    <div className="newproject">
+    <div className="newproject" onClick={props.changeVisibility('newProjectUI')} Style="cursor: pointer">
+      "Add New Project"
       <div className="image">
-        <img src={AddIcon} alt="add" data-credits={AddIconCredits}/>
+        {/* <img src={AddIcon} alt="add" data-credits={AddIconCredits}/> */}
       </div>
     </div>
   );

@@ -28,6 +28,7 @@ function newProjectObj () {
 
 
 const App = () => {
+
   const [selectedProject, setSelectedProject] = useState('today');
   const [projects, setProjects] = useState([
     initStorage('projects')
@@ -54,38 +55,93 @@ const App = () => {
     const storedTasks = getStorageObj('tasks');
     const concatTasks = storedTasks.concat(newtaskObj());
 
-    saveObjToStorage('tasks', storedTasks.concat(newtaskObj()));
+    saveObjToStorage('tasks', concatTasks);
+    setProjects(concatProjects);
+  }
+
+
+  const ChangeProject = (id, e) => {
+    const { name, value } = e.target;
+    const newProjects = projects.map(item => {
+      if ( item.id === id) {
+        return {
+          ...item,
+          [name]: value,
+        }
+      }
+      return item;
+    });
+    setProjects(newProjects);
+  };
+
+  const ChangeTask = (id, e) => {
+
+  };
+
+
+  const [visible, setVisible] = useState({
+    newProjectUI: false,
+    newTaskUI: false,
+    newTaskUI_inline: false,
+  });
+
+
+  const changeVisibility = (item) => () => {
+    setVisible( visible => ( 
+      Object.fromEntries(
+        Object.entries(visible).map(
+          ([key, value]) => {
+            console.log([key, value])
+            if (key === item) {
+              return [key, (value) ? false : true];
+            }
+            return [key, value];
+          }
+        )
+      )
+    ));
   }
 
 
 
 
-  const ChangeProject = (id, event) => {
-  
-  };
 
 
+  const changeVisibilityV1 = () => (object) => {
+    console.log('change visibility');
+    return (visible[object]) ? setVisible(visible.object = false) : setVisible(visible.object = true);
+  }
+
+  console.log('visible');
+  console.log(visible.newProjectUI);
 
   return (
     <div className="app">
-      <Sidebar />
-      <br />
-
-      <NewProjectUI 
-        AddProject={AddProject}  
+      <Sidebar 
+        changeVisibility={changeVisibility} 
       />
+
+      { visible.newProjectUI ?  <NewProjectUI/>  : null }
 
       <NewTaskUI 
         AddTask={AddTask}
       />
-
-      <br />
 
       <Main 
       />
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
 
 
 
