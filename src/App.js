@@ -39,25 +39,24 @@ const App = () => {
 
 
   const AddProject = () => {
-    console.log('add project');
-    console.log(concatProjects);
-
     const storedProjects = getStorageObj('projects');
     const concatProjects = storedProjects.concat(newProjectObj());
-
-    saveObjToStorage('projects', storedProjects.concat(newProjectObj()));
+    
+    console.log('add project');
+    console.log(concatProjects);
+    saveObjToStorage('projects', concatProjects);
+    setProjects(concatProjects);
   };
 
   const AddTask = () => {
-    console.log('add task');
-    console.log(concatTasks);
-
     const storedTasks = getStorageObj('tasks');
     const concatTasks = storedTasks.concat(newtaskObj());
-
+    
+    console.log('add task');
+    console.log(concatTasks);
     saveObjToStorage('tasks', concatTasks);
-    setProjects(concatProjects);
-  }
+    setTasks(concatTasks);
+  };
 
 
   const ChangeProject = (id, e) => {
@@ -85,7 +84,6 @@ const App = () => {
     newTaskUI_inline: false,
   });
 
-
   const changeVisibility = (item) => () => {
     setVisible( visible => ( 
       Object.fromEntries(
@@ -102,32 +100,29 @@ const App = () => {
     ));
   }
 
-
-
-
-
-
-  const changeVisibilityV1 = () => (object) => {
-    console.log('change visibility');
-    return (visible[object]) ? setVisible(visible.object = false) : setVisible(visible.object = true);
-  }
-
-  console.log('visible');
-  console.log(visible.newProjectUI);
-
   return (
     <div className="app">
       <Sidebar 
         changeVisibility={changeVisibility} 
       />
 
-      { visible.newProjectUI ?  <NewProjectUI/>  : null }
+      { visible.newProjectUI 
+        ?  <NewProjectUI
+            AddProject={AddProject}
+          />  
+        : null 
+      }
 
-      <NewTaskUI 
-        AddTask={AddTask}
-      />
+
+      { visible.newTaskUI 
+        ? <NewTaskUI
+            AddTask={AddTask}
+          /> 
+        : null 
+      }
 
       <Main 
+        changeVisibility={changeVisibility}
       />
     </div>
   );
