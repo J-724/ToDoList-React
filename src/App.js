@@ -28,7 +28,6 @@ function newProjectObj () {
 
 
 const App = () => {
-
   const [selectedProject, setSelectedProject] = useState('today');
   const [projects, setProjects] = useState([
     initStorage('projects')
@@ -36,6 +35,11 @@ const App = () => {
   const [tasks, setTasks] = useState([
     initStorage('tasks')
   ]);
+  const [visible, setVisible] = useState({
+    newProjectUI: false,
+    newTaskUI: false,
+    newTaskUI_inline: false,
+  });
 
 
   const AddProject = () => {
@@ -77,13 +81,6 @@ const App = () => {
 
   };
 
-
-  const [visible, setVisible] = useState({
-    newProjectUI: false,
-    newTaskUI: false,
-    newTaskUI_inline: false,
-  });
-
   const changeVisibility = (item) => () => {
     setVisible( visible => ( 
       Object.fromEntries(
@@ -109,14 +106,17 @@ const App = () => {
       { visible.newProjectUI 
         ?  <NewProjectUI
             AddProject={AddProject}
+            changeVisibility={changeVisibility}
           />  
         : null 
       }
 
+      <br/>
 
       { visible.newTaskUI 
         ? <NewTaskUI
             AddTask={AddTask}
+            changeVisibility={changeVisibility}
           /> 
         : null 
       }
