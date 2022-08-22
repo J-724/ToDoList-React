@@ -6,7 +6,14 @@ const AddIconCredits = "https://www.flaticon.com/free-icons/plus";
 const NewProject = (props) => {
 
   return (
-    <div className="newproject" onClick={props.changeVisibility('newTaskUI')} Style="cursor: pointer">
+    <div 
+      className="newproject" 
+      onClick={ () => {
+        props.changeVisibility('newTaskUI'); 
+        props.callpurpose('add')
+      }}   
+      Style="cursor: pointer"
+    >
       "Add New Project"
       <div className="image">
         {/* <img src={AddIcon} alt="add" data-credits={AddIconCredits}/> */}

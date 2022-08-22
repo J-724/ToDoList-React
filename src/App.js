@@ -7,6 +7,7 @@ import NewTaskUI from "./components/NewTaskUI";
 import { Project, Task } from "./components/#Misc/ObjTemplate";
 import { getStorageObj, saveObjToStorage, initStorage  } from "./StorageTest";
 
+
 // change displayed project from click event that returns the name of the selected project on the sidebar
 
 function newtaskObj () {
@@ -28,6 +29,7 @@ function newProjectObj () {
 
 
 const App = () => {
+  const [callPurpose, setCallPurpose] = useState("");
   const [selectedProject, setSelectedProject] = useState('today');
   const [projects, setProjects] = useState([
     initStorage('projects')
@@ -62,7 +64,6 @@ const App = () => {
     setTasks(concatTasks);
   };
 
-
   const ChangeProject = (id, e) => {
     const { name, value } = e.target;
     const newProjects = projects.map(item => {
@@ -77,10 +78,24 @@ const App = () => {
     setProjects(newProjects);
   };
 
-  const ChangeTask = (id, e) => {
+  const editTask = (id, e) => () => {
+    const { name, value } = e.target;
 
+    const storedTasks = getStorageObj('tasks')
+
+    const newTasks = storedTasks.map(item => {
+      if ( item.id === id) {
+        return {
+          ...item,
+          [name]: value,
+        }
+      }
+      return item;
+    });
+    setTasks(newTasks);
+    saveObjToStorage('tasks', newTasks);
   };
-
+  
   const changeVisibility = (item) => () => {
     setVisible( visible => ( 
       Object.fromEntries(
@@ -97,9 +112,14 @@ const App = () => {
     ));
   }
 
+  const changeCallPurpose = (purpose) => {
+    setCallPurpose(purpose);
+  }
+
   return (
     <div className="app">
       <Sidebar 
+        callPurpose={changeCallPurpose}
         changeVisibility={changeVisibility} 
       />
 
@@ -121,9 +141,22 @@ const App = () => {
         : null 
       }
 
+      {/* need to render task element */}
+      <NewTaskUI
+        storedTasks={tasks}
+        purpose={callPurpose}
+        AddTask={AddTask}
+        changeVisibility={changeVisibility}
+      /> 
+
+      <br/>
+
       <Main 
+        storedTasks={tasks}
+        purpose={callPurpose} 
         changeVisibility={changeVisibility}
       />
+
     </div>
   );
 }

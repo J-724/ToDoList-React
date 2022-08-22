@@ -15,6 +15,7 @@ const Sidebar = (props) => {
       <DisplayProjects />
       <NewProject 
         changeVisibility={props.changeVisibility}
+        callpurpose={props.callpurpose}
       />
     </div>
   );
