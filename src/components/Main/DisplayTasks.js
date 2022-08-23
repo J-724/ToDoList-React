@@ -2,7 +2,7 @@ import React, { useState, useEffect} from "react";
 
 const DisplayTasks = (props) => {
   console.log(props.task)
-  // const   { project, name, description, date, important } = props.task;
+  const   { project, name, description, date, important } = props.task;
 
   return (
     <div className="task-item" > 
@@ -16,7 +16,7 @@ const DisplayTasks = (props) => {
 
       <div className="task-item-data">
         <div className="task-item-tilte">{props.task.name}</div>
-        {/* <div className="task-item-description">{description}</div> */}
+        <div className="task-item-description">{description}</div>
       </div>
 
       <button 
